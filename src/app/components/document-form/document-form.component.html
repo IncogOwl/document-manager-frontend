@@ -1,14 +1,22 @@
-<h1>Add a new note</h1>
+<h1>Add a new document</h1>
 
-<form>
-    <mat-label for="title">Title of Note:</mat-label>
-    <input type="text" id="title" name="title"><br><br>
-    <label for="type">Type of Note:</label>
-    <select id="type" name="type">
-      <option value="">Select Type</option>
-      <option value="pdf">pdf</option>
-      <option value="word">word</option>
-    </select><br><br>
-    <button type="submit">Save</button>
-    <button type="button" (click)="goBack()">Cancel</button>
-  </form>
+<mat-card>
+  <mat-card-content>
+    <form (ngSubmit)="uploadDocument()">
+      <mat-label for="title">Title of Document</mat-label>
+      <mat-form-field>
+        <input matInput [(ngModel)]="title" name="title" required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select File</mat-label>
+        <input type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" required>
+      </mat-form-field>
+
+      <div class="button-container">
+        <button type="submit">Save</button>
+        <button (click)="goBack()">Cancel</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

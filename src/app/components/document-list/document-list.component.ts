@@ -1,14 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { DocumentService } from '../../services/document.service';
 
 @Component({
   selector: 'app-document-list',
@@ -18,22 +16,45 @@ import { Router, RouterModule } from '@angular/router';
     MatToolbarModule,
     MatListModule,
     MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     MatIconModule,
-    FormsModule,
     RouterModule 
   ],
   templateUrl: './document-list.component.html',
   styleUrl: './document-list.component.css'
 })
-export class DocumentListComponent {
+export class DocumentListComponent implements OnInit {
+  documents: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private documentService: DocumentService) {}
 
-  notes: { id: number, title: string, content: string }[] = [];
-  goToAddNote() {
+  ngOnInit() {
+    this.loadDocuments();
+  }
+
+  loadDocuments() {
+    this.documentService.getDocuments().subscribe(
+      (data) => {
+        this.documents = data;
+      },
+      (error) => {
+        console.error('Error fetching documents:', error);
+      }
+    );
+  }
+
+  goToAddDocument() {
     this.router.navigate(['/document']);
+  }
+
+  deleteDocument(id: number) {
+    this.documentService.deleteDocument(id).subscribe(
+      () => {
+        this.loadDocuments();
+      },
+      (error) => {
+        console.error('Error deleting document:', error);
+      }
+    );
   }
 }

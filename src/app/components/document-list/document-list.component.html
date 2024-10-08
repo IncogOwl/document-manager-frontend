@@ -1,15 +1,19 @@
-<h1>My Notes</h1>
+<h1>My Documents</h1>
+
 <div class="container">
-  <mat-list *ngIf="notes.length > 0">
-    <mat-list-item *ngFor="let note of notes">
-      <span matListItemTitle>{{ note.title }}</span>
-      <span matListItemLine>{{ note.content }}</span>
+  <mat-list>
+    <mat-list-item *ngFor="let document of documents">
+      <span matListItemTitle>{{ document.title }}</span>
+      <span matListItemLine>{{ document.file_type }} - Uploaded: {{ document.uploaded_at | date }}</span>
+      <button mat-icon-button color="warn" (click)="deleteDocument(document.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </mat-list-item>
   </mat-list>
-  <h1 *ngIf="notes.length === 0">No notes available. Add a new note below!</h1>
+
+  <p *ngIf="documents.length === 0">No documents available. Add a new document below!</p>
 </div>
 
-<div class="buttons"> 
-  <button> Delete Notes </button>
-  <button (click)="goToAddNote()"> Add Note </button>
+<div class="buttons">
+  <button (click)="goToAddDocument()">Add Document</button>
 </div>
