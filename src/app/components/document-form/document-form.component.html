@@ -1,0 +1,14 @@
+<h1>Add a new note</h1>
+
+<form>
+    <mat-label for="title">Title of Note:</mat-label>
+    <input type="text" id="title" name="title"><br><br>
+    <label for="type">Type of Note:</label>
+    <select id="type" name="type">
+      <option value="">Select Type</option>
+      <option value="pdf">pdf</option>
+      <option value="word">word</option>
+    </select><br><br>
+    <button type="submit">Save</button>
+    <button type="button" (click)="goBack()">Cancel</button>
+  </form>
